@@ -1,0 +1,2 @@
+py -m PyInstaller --clean -F -w steam_uploader.py
+py D:\VS\SDK\Python39_64\Tools\i18n\pygettext.py -d text steam_uploader_text.py

@@ -1,0 +1,84 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2026-08-31 22:15+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: steam_uploader_text.py:11
+msgid "Mush Dash Workshop Uploader"
+msgstr ""
+
+#: steam_uploader_text.py:12
+msgid "by Nerux-Network.de, modified by CrazyDog"
+msgstr ""
+
+#: steam_uploader_text.py:13
+msgid "App ID (Mush Dash = 3026250)"
+msgstr ""
+
+#: steam_uploader_text.py:14
+msgid "File ID"
+msgstr ""
+
+#: steam_uploader_text.py:15
+msgid "Title *"
+msgstr ""
+
+#: steam_uploader_text.py:16
+msgid "Description"
+msgstr ""
+
+#: steam_uploader_text.py:17
+msgid "Content (Folder only) *"
+msgstr ""
+
+#: steam_uploader_text.py:18
+msgid "Choose folder ..."
+msgstr ""
+
+#: steam_uploader_text.py:19
+msgid "Clear"
+msgstr ""
+
+#: steam_uploader_text.py:20
+msgid "Preview image (PNG/JPG, < 1 MB)"
+msgstr ""
+
+#: steam_uploader_text.py:21
+msgid "Choose preview image ..."
+msgstr ""
+
+#: steam_uploader_text.py:22
+msgid "Path to steam_api64.dll (optional, otherwise next to the tool)"
+msgstr ""
+
+#: steam_uploader_text.py:23
+msgid "Update Content Only"
+msgstr ""
+
+#: steam_uploader_text.py:24
+msgid "Upload"
+msgstr ""
+
+#: steam_uploader_text.py:25
+msgid "Visibility"
+msgstr ""
+
+#: steam_uploader_text.py:26
+msgid "Tags (comma-separated, optional)"
+msgstr ""
+
+#: steam_uploader_text.py:27
+msgid "Log"
+msgstr ""
+

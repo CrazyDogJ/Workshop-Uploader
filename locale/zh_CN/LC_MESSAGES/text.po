@@ -1,0 +1,85 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2026-08-31 22:15+0800\n"
+"PO-Revision-Date: 2026-08-31 22:17+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: Poedit 3.9\n"
+
+#: steam_uploader_text.py:11
+msgid "Mush Dash Workshop Uploader"
+msgstr "Mush Dash创意工坊上传工具"
+
+#: steam_uploader_text.py:12
+msgid "by Nerux-Network.de, modified by CrazyDog"
+msgstr "原作者：Nerux-Network.de, 由CrazyDog修改"
+
+#: steam_uploader_text.py:13
+msgid "App ID (Mush Dash = 3026250)"
+msgstr "应用ID (Mush Dash = 3026250)"
+
+#: steam_uploader_text.py:14
+msgid "File ID"
+msgstr "工坊项目ID"
+
+#: steam_uploader_text.py:15
+msgid "Title *"
+msgstr "标题 *"
+
+#: steam_uploader_text.py:16
+msgid "Description"
+msgstr "描述"
+
+#: steam_uploader_text.py:17
+msgid "Content (Folder only) *"
+msgstr "内容文件夹"
+
+#: steam_uploader_text.py:18
+msgid "Choose folder ..."
+msgstr "选择文件夹 ..."
+
+#: steam_uploader_text.py:19
+msgid "Clear"
+msgstr "清除"
+
+#: steam_uploader_text.py:20
+msgid "Preview image (PNG/JPG, < 1 MB)"
+msgstr "预览图像 (PNG/JPG, < 1 MB)"
+
+#: steam_uploader_text.py:21
+msgid "Choose preview image ..."
+msgstr "选择预览图像 ..."
+
+#: steam_uploader_text.py:22
+msgid "Path to steam_api64.dll (optional, otherwise next to the tool)"
+msgstr "steam_api64.dll路径（可选项，留空将检查同文件夹的dll）"
+
+#: steam_uploader_text.py:23
+msgid "Update Content Only"
+msgstr "仅上传内容"
+
+#: steam_uploader_text.py:24
+msgid "Upload"
+msgstr "上传"
+
+#: steam_uploader_text.py:25
+msgid "Visibility"
+msgstr "可视性"
+
+#: steam_uploader_text.py:26
+msgid "Tags (comma-separated, optional)"
+msgstr "标签（用逗号隔开，可选项）"
+
+#: steam_uploader_text.py:27
+msgid "Log"
+msgstr "输出"
