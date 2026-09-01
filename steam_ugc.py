@@ -471,6 +471,7 @@ class SteamUGC:
             preview_file = os.path.abspath(preview_file)
 
         # 1) TryExistItem
+        published_id = file_id
         if (file_id != 0):
             self.log("Try uploading using file id : %d ..." % published_id)
             published_id = file_id

@@ -27,7 +27,6 @@ try:
 except Exception:
     _PIL_OK = False
 
-import steam_uploader_text as loc_text
 from steam_uploader_text import language_object
 
 SIGNATURE_TEXT = ""
@@ -178,18 +177,20 @@ class UploaderApp(ctk.CTk):
         update_upload_row.pack(fill="x", padx=16, pady=(0, 10))
 
         # Update content only button
-        self.update_btn = ctk.CTkButton(
+        self.update_btn:ctk.CTkButton = ctk.CTkButton(
             update_upload_row, textvariable=self.langObj.get_text_value("updateContOnly"), height=46, fg_color=ACCENT,
             hover_color="#4a76e0", font=ctk.CTkFont(size=16, weight="bold"),
             command=self._start_update,
-        ).pack(fill="both", side="left", expand=True)
+        )
+        self.update_btn.pack(fill="both", side="left", expand=True)
         
         # Upload button
-        self.upload_btn = ctk.CTkButton(
+        self.upload_btn:ctk.CTkButton = ctk.CTkButton(
             update_upload_row, textvariable=self.langObj.get_text_value("upload"), height=46, fg_color=ACCENT,
             hover_color="#4a76e0", font=ctk.CTkFont(size=16, weight="bold"),
             command=self._start_upload,
-        ).pack(fill="both", side="left", padx=(8,0), expand=True)
+        )
+        self.upload_btn.pack(fill="both", side="left", padx=(8,0), expand=True)
 
         # Progress
         self.progress = ctk.CTkProgressBar(body, height=14)
@@ -276,13 +277,18 @@ class UploaderApp(ctk.CTk):
             return
 
         params = {
-            "only_content": True,
+            "only_content": False,
             "app_id": app_id,
             "file_id": file_id,
+            "title": "",
+            "description": "",
+            "visibility": VIS_LABELS.get(self.vis_menu.get(), "public"),
+            "tags": "",
             "dll": self.dll_entry.get().strip(),
         }
-    
-        self.upload_btn.configure(state="disabled", text="Uploading ...")
+
+        self.update_btn.configure(state="disabled")
+        self.upload_btn.configure(state="disabled")
         self.progress.set(0)
         threading.Thread(target=self._worker, args=(params,), daemon=True).start()
 
@@ -333,7 +339,8 @@ class UploaderApp(ctk.CTk):
             "dll": self.dll_entry.get().strip(),
         }
 
-        self.upload_btn.configure(state="disabled", text="Uploading ...")
+        self.update_btn.configure(state="disabled")
+        self.upload_btn.configure(state="disabled")
         self.progress.set(0)
         threading.Thread(target=self._worker, args=(params,), daemon=True).start()
 
