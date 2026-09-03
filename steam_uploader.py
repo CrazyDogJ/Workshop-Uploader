@@ -277,7 +277,7 @@ class UploaderApp(ctk.CTk):
             return
 
         params = {
-            "only_content": False,
+            "only_content": True,
             "app_id": app_id,
             "file_id": file_id,
             "title": "",
@@ -316,12 +316,7 @@ class UploaderApp(ctk.CTk):
         except ValueError:
             messagebox.showwarning("Error", "App ID must be a number.")
             return
-
-        try:
-            file_id = int(self.file_id_entry.get().strip())
-        except ValueError:
-            messagebox.showwarning("Error", "File ID must be a number. Creating new id.")
-
+        
         description = self.desc_box.get("1.0", "end").rstrip()
         if not description.endswith(SIGNATURE_TEXT):
             description = (description + SIGNATURE) if description else SIGNATURE.strip()
@@ -331,7 +326,7 @@ class UploaderApp(ctk.CTk):
         params = {
             "only_content": False,
             "app_id": app_id,
-            "file_id": file_id,
+            "file_id": 0,
             "title": title,
             "description": description,
             "visibility": VIS_LABELS.get(self.vis_menu.get(), "public"),
@@ -455,7 +450,7 @@ class UploaderApp(ctk.CTk):
                 self.log("Note: only the first %d images are shown in the gallery "
                          "(all files are still uploaded as content)." % MAX_GALLERY)
 
-            _pid, url = steam.upload(
+            bUploadSuccess, _pid, url = steam.upload(
                 only_content=params["only_content"],
                 file_id=params["file_id"],
                 title=params["title"],
@@ -467,7 +462,7 @@ class UploaderApp(ctk.CTk):
                 tags=params["tags"],
                 progress_cb=self.set_progress,
             )
-            self.after(0, lambda u=url: self._on_success(u))
+            self.after(0, lambda u=url,S=bUploadSuccess: self._on_finish(bSuccess=S, url=u))
         except Exception as exc:
             self.log("ERROR: %s" % exc)
             self.log(traceback.format_exc())
@@ -476,17 +471,23 @@ class UploaderApp(ctk.CTk):
             if steam:
                 steam.shutdown()
             self._cleanup_temp()
-            self.after(0, lambda: self.upload_btn.configure(
-                state="normal", text="Upload"))
+            self.after(0, lambda: self._on_worker_finish())
 
-    def _on_success(self, url):
+    def _on_worker_finish(self):
+        self.upload_btn.configure(state="normal")
+        self.update_btn.configure(state="normal")
+
+    def _on_finish(self, bSuccess, url):
         self.progress.set(1)
-        if messagebox.askyesno(
-            "Success",
-            "Item uploaded successfully!\n\n%s\n\nOpen the item page in your browser?" % url,
-        ):
-            import webbrowser
-            webbrowser.open(url)
+        if bSuccess == True:
+            if messagebox.askyesno(
+                "Success",
+                "Item uploaded successfully!\n\n%s\n\nOpen the item page in your browser?" % url,
+            ):
+                import webbrowser
+                webbrowser.open(url)
+        else:
+            messagebox.showerror("Error", "Item id is not valid, update content failed.")
 
     def _cleanup_temp(self):
         if self._temp_dir and os.path.isdir(self._temp_dir):

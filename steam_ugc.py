@@ -463,7 +463,7 @@ class SteamUGC:
             
         return published_id
 
-    def upload(self, only_content, file_id, title, description, content_folder, preview_file=None,
+    def upload(self, only_content:bool, file_id, title, description, content_folder, preview_file=None,
                visibility="public", tags=None, change_note="Initial upload",
                progress_cb=None, extra_previews=None):
         content_folder = os.path.abspath(content_folder)
@@ -492,7 +492,7 @@ class SteamUGC:
                     self.ugc, handle, _b(content_folder)
                 ):
                     self.log("WARN: Content folder could not be set.")
-        if not only_content:
+        if only_content == False:
             if not self.lib.SteamAPI_ISteamUGC_SetItemTitle(self.ugc, handle, _b(title)):
                 self.log("WARN: Title could not be set.")
             if not self.lib.SteamAPI_ISteamUGC_SetItemDescription(
@@ -505,24 +505,24 @@ class SteamUGC:
                 ):
                     self.log("WARN: Preview image could not be set.")
 
-        # Additional preview images -> show up in the item's gallery
-        added = 0
-        for extra in (extra_previews or []):
-            path = os.path.abspath(extra)
-            if self.lib.SteamAPI_ISteamUGC_AddItemPreviewFile(
-                self.ugc, handle, _b(path), k_EItemPreviewType_Image
-            ):
-                added += 1
-            else:
-                self.log("WARN: Could not add preview image '%s'."
-                         % os.path.basename(path))
-        if added:
-            self.log("Added %d image(s) to the preview gallery." % added)
-        self.lib.SteamAPI_ISteamUGC_SetItemVisibility(
-            self.ugc, handle, VISIBILITY.get(visibility, 0)
-        )
-        if tags:
-            self._set_tags(handle, tags)
+            # Additional preview images -> show up in the item's gallery
+            added = 0
+            for extra in (extra_previews or []):
+                path = os.path.abspath(extra)
+                if self.lib.SteamAPI_ISteamUGC_AddItemPreviewFile(
+                    self.ugc, handle, _b(path), k_EItemPreviewType_Image
+                ):
+                    added += 1
+                else:
+                    self.log("WARN: Could not add preview image '%s'."
+                             % os.path.basename(path))
+            if added:
+                self.log("Added %d image(s) to the preview gallery." % added)
+            self.lib.SteamAPI_ISteamUGC_SetItemVisibility(
+                self.ugc, handle, VISIBILITY.get(visibility, 0)
+            )
+            if tags:
+                self._set_tags(handle, tags)
 
         # 5) SubmitItemUpdate + progress
         self.log("Uploading ...")
@@ -534,12 +534,13 @@ class SteamUGC:
             progress_handle=handle, progress_cb=progress_cb,
         )
         if submit_res.m_eResult == k_EResultFileNotFound:
-            if not only_content:
+            if only_content == False:
                 # Create item and retry.
                 self.log("File id : %d is not valid, trying to create a new one." % published_id)
                 published_id = self.createItem()
                 self.upload(
-                    file_id=file_id,
+                    only_content=False,
+                    file_id=published_id,
                     title=title,
                     description=description,
                     content_folder=content_folder,
@@ -549,6 +550,9 @@ class SteamUGC:
                     tags=tags,
                     progress_cb=progress_cb,
                 )
+            else:
+                self.log("File id not exist, can't update content !")
+                return False, published_id, ""
 
         if submit_res.m_eResult != k_EResultOK:
             raise SteamError("Upload failed (EResult=%d). %s"
@@ -559,7 +563,7 @@ class SteamUGC:
             progress_cb(1, 1)
         url = "https://steamcommunity.com/sharedfiles/filedetails/?id=%d" % published_id
         self.log("Done! Item URL: %s" % url)
-        return published_id, url
+        return True, published_id, url
 
     def shutdown(self):
         if self.lib:
